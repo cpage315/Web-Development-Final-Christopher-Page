@@ -1,0 +1,21 @@
+{
+  "name": "final_proj",
+  "version": "1.0.0",
+  "description": "application to register for sports lessons",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "baseball"
+  ],
+  "author": "Christopher Page",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
