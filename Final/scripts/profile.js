@@ -5,15 +5,14 @@ from './main.js'
 
 let user = getCurrentUser();
 
-if(!user) window.location.href = "login.html";
+if(!user) window.location.href = "profile.html";
 
 let profile = document.getElementById("profile");
 profile.innerHTML = `
-  <h2>Welcome back, ${user.username}!</h2>
+  <h2>${user.username}</h2>
   <div>
     <p class="error"></p>
     <button class="btn" id="edit">Edit Info</button>
-    <button class="btn" id="delete">Delete Account</button>
   </div>
 `;
 
@@ -21,7 +20,6 @@ document.getElementById("edit").addEventListener('click', editProfile);
 document.getElementById("delete").addEventListener('click', deleteAccount);
 
 function editProfile() {
-  profile.classList.toggle("hide");
   let editForm = document.getElementById("editForm");
   editForm.innerHTML = `
     <form id="form" class="basic-form">
@@ -32,14 +30,34 @@ function editProfile() {
       <br>
       <input type="submit" value="Submit">
     </form>
+
     <form id="passForm" class="basic-form">
       <p class="error"></p>
       <h2>Change Password</h2>
       <label for="pswd">Change Password</label>
-      <input type="password" name="pswd" id="pswd">
+      <input type="password" name="pword" id="pword">
       <br>
       <input type="submit" value="Submit">
     </form>
+
+    <form id="lessForm" class="basic-form">
+    <p class="error"></p>
+    <h2>Change Lesson</h2>
+    <label for="ldate">Change Lesson Date</label>
+    <input type="date" name="ldate" id="ldate">
+    <br>
+    <input type="submit" value="Submit">
+    </form>
+
+    <form id="lessForm" class="basic-form">
+    <p class="error"></p>
+    <h2>Change Lesson</h2>
+    <label for="ldate">Change Lesson Time</label>
+    <input type="time" name="appt" id="appt">
+    <br>
+    <input type="submit" value="Submit">
+    </form>
+
     <button class="btn" id="cancel">Cancel</button>
   `;
 
@@ -72,23 +90,5 @@ function editAccount(e) {
        console.log(`Error! ${errText}`)
      });
   
-  }
-}
-
-function deleteAccount() {
-  if(confirm('Are you sure you want to delete your account???')) {
-    fetchData('/users/delete', {userId: user.user_id}, "DELETE")
-    .then((data) => {
-      if(!data.message) {
-        console.log(data.success)
-        logout();
-        window.location.href = "register.html"
-      }
-    })
-    .catch((error) => {
-      const errText = error.message;
-      document.querySelector("#profile div p.error").innerHTML = errText;
-      console.log(`Error! ${errText}`)
-    })
   }
 }

@@ -2,19 +2,19 @@ import
 { fetchData, getCurrentUser, setCurrentUser, removeCurrentUser } 
 from './main.js'
 
-const loginForm = document.getElementById("login-form");
-if(loginForm) loginForm.addEventListener('submit', login);
+const loginform = document.getElementById("login");
+if(logform) logform.addEventListener('submit', login);
 
 function login(e) {
   e.preventDefault();
 
-  const name = document.getElementById("uname").value;
-  const pswd = document.getElementById("pword").value;
-  fetchData('/users/login', {username: name, password: pswd}, "POST")
+  const uname = document.getElementById("uname").value;
+  const pword = document.getElementById("pword").value;
+  fetchData('/users/login', {username: uname, password: pword}, "POST")
   .then((data) => {
     if(!data.message) {
       setCurrentUser(data);
-      window.location.href = "profile.html";
+      window.location.href = "register.html";
     }
   })
   .catch((error) => {
@@ -25,16 +25,43 @@ function login(e) {
   });
 }
 
-const regForm = document.getElementById("reg-form");
-if(regForm) regForm.addEventListener('submit', register);
+const regForm = document.getElementById("register");
+if(regform) regform.addEventListener('submit', register);
 
 function register(e) {
   e.preventDefault();
 
-  const name = document.getElementById("uname").value;
-  const pswd = document.getElementById("pword").value;
+  const uname = document.getElementById("uname").value;
+  const pword = document.getElementById("pword").value;
 
-  fetchData('/users/register', {username: name, password: pswd}, "POST")
+  fetchData('/users/register', {username: uname, password: pword}, "POST")
+  .then((data) => {
+    if(!data.message) {
+      setCurrentUser(data);
+      window.location.href = "profile.html";
+    }
+  })
+  .catch((error) => {
+    const errText = error.message;
+    document.querySelector("#register p.error").innerHTML = errText;
+    document.getElementById("pword").value = "";
+    console.log(`Error! ${errText}`)
+  });
+}
+
+const lform = document.getElementById("lesson");
+if(lform) lform.addEventListener('submit', lesson);
+
+function lesson(e) {
+  e.preventDefault();
+
+  const pos = document.getElementById("pos").value;
+  const ltype = document.getElementById("ltype").value;
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+  const comm = document.getElementById("extra").value;
+
+  fetchData('/users/register', {position: pos, lessontype: ltype, date: date, time: time, comments: extra}, "POST")
   .then((data) => {
     if(!data.message) {
       setCurrentUser(data);
@@ -44,7 +71,7 @@ function register(e) {
   .catch((error) => {
     const errText = error.message;
     document.querySelector("#reg-form p.error").innerHTML = errText;
-    document.getElementById("pswd").value = "";
+    document.getElementById("pword").value = "";
     console.log(`Error! ${errText}`)
   });
 }
